@@ -5,8 +5,8 @@ controllers.controller 'UsersController', ['$scope', '$routeParams', 'User', '$s
       $scope.users = User.all()
 
     $scope.new = ->
-      $scope.user = null
-      $state.go 'users.new'
+      $state.go('users.new')
+        .then -> $scope.user = null
 
     $scope.edit = (user) ->
       $state.go('users.edit', id: user.id)

@@ -5,8 +5,8 @@ controllers.controller 'RolesController', ['$scope', '$routeParams', 'Role', '$s
       $scope.roles = Role.all()
 
     $scope.new = ->
-      $scope.role = null
-      $state.go 'roles.new'
+      $state.go('roles.new')
+        .then -> $scope.role = null
 
     $scope.edit = (role) ->
       $state.go('roles.edit', id: role.id)

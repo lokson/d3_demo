@@ -27,7 +27,7 @@ feature 'users', js: true do
     expect(page).to have_content new[:name]
 
     # edit
-    f(new[:name]).click()
+    f(selector: 'a', text: new[:name]).click()
     expect(page).to have_content User.first.name
     edits = attributes_for :user
     fill_many :user, with: edits
@@ -37,7 +37,7 @@ feature 'users', js: true do
     expect(page).to have_content edits[:name]
 
     # delete
-    f(edits[:name]).click()
+    f(selector: 'a', text: edits[:name]).click()
     click_on 'Delete'
 
     # index

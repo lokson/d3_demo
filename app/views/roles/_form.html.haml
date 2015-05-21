@@ -1,0 +1,5 @@
+= simple_form_for role, url: '', html: { name: 'form' } do |f|
+  = f.ng_input :name
+  = f.submit class:'btn btn-primary', 'ng-click':'save(role)', 'ng-disabled':'form.$invalid', onclick:'return false'
+  - if role.persisted?
+    %button.btn.btn-danger{'ng-click':'delete(role)'} Delete

@@ -1,0 +1,10 @@
+.col-sm-2
+  %input{name:'keywords', 'ng-model':'keywords'}
+  %ul.list-unstyled.animate-leave{'ng-repeat':'role in roles | filter:keywords | orderBy:"name"' }
+    %li
+      %a{'ng-click':'edit(role)'}
+        {{role.name}}
+  %a.glyphicon.glyphicon-plus{'ng-click':'new()'}
+.col-sm-10
+  %div{'ui-view':''}
+

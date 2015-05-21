@@ -1,7 +1,7 @@
-= simple_form_for user, url: '', html: { name: 'userForm' } do |f|
+= simple_form_for user, url: '', html: { name: 'form' } do |f|
   -#= f.input :name, input_html: { 'ng-model':'user.name', 'ng-required':'true' }
   -#= f.input :name, input_html: { 'ng-model':'user.name' }.merge(ng_validations User, :name)
   = f.ng_input :name
-  = f.submit class:'btn btn-primary', 'ng-click':'save(user)', 'ng-disabled':'userForm.$invalid', onclick:'return false'
+  = f.submit class:'btn btn-primary', 'ng-click':'save(user)', 'ng-disabled':'form.$invalid', onclick:'return false'
   - if user.persisted?
     %button.btn.btn-danger{'ng-click':'delete(user)'} Delete

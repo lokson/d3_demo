@@ -33,11 +33,18 @@ end
 
 # f("buscar por")
 # f(text: "buscar por", selector: "a")
+# f(:a, "buscar por")
 # f("buscar por") { |element| ... }
 # f() { |every_element| ... }
-def f(options)
-  options = { text: options } if options.is_a? String
-  options = { selector: '*', text: '' }.merge options
+def f(*args)
+  if args.size == 1
+    options = args.first
+    options = { text: options } if options.is_a? String
+    options = { selector: '*', text: '' }.merge options
+  else
+    options = { selector: args.first.to_s, text: args.second }
+  end
+
   all(options[:selector]).to_a.keep_if do |e|
     yield e if block_given?
     e.text.include? options[:text]

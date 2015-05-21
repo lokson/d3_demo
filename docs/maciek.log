@@ -1,2 +1,4 @@
-0h read angular book and tutorial to mix it with rails
-2h update ror, init project, postgres and rspec
+[days]
+0.5 bootstrap
+1.5 users crud
+0.5 roles crud

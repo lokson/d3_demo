@@ -4,10 +4,12 @@ class UsersController < ApplicationController
 
   def create
     user.save!
+    render user
   end
 
   def update
     user.save!
+    render user
   end
 
   def destroy

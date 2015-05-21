@@ -4,10 +4,12 @@ class RolesController < ApplicationController
 
   def create
     role.save!
+    render role
   end
 
   def update
     role.save!
+    render role
   end
 
   def destroy

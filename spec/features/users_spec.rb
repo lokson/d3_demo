@@ -17,11 +17,13 @@ feature 'users', js: true do
     # index
     visit '/'
     find('.glyphicon-plus').click()
+    expect(User).to_not exist
 
     # new
     new = attributes_for :user
     fill_in_many :user, with: new
     click_on 'Create User'
+    expect(User.only).to have_attributes new
 
     # index
     expect(page).to have_content new[:name]
@@ -32,6 +34,7 @@ feature 'users', js: true do
     edits = attributes_for :user
     fill_many :user, with: edits
     click_on 'Update User'
+    expect(User.only).to have_attributes edits
 
     # index
     expect(page).to have_content edits[:name]
@@ -39,6 +42,7 @@ feature 'users', js: true do
     # delete
     f(selector: 'a', text: edits[:name]).click()
     click_on 'Delete'
+    expect(User).to_not exist
 
     # index
     expect(page).not_to have_content edits[:name]

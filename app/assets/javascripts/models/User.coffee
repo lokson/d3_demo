@@ -39,7 +39,7 @@ angular.module("mi")
         resource.extension.delete = (obj) ->
           key = resource.extension.find(obj).key
           resource.extension.splice(key,1)
-          resource.delete(obj)
+          resource.delete(id: obj.id)
 
       resource.extension
 

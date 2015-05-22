@@ -13,11 +13,11 @@ controllers.controller 'UsersController', ['$scope', '$routeParams', 'User', '$s
         .then -> $scope.user = angular.copy(user)
 
     $scope.save = (user) ->
-      $scope.users.save(user)
+      User.save(user)
       $state.go 'users'
 
     $scope.delete = (user) ->
-      $scope.users.delete(user)
+      User.delete(user)
       $state.go 'users'
 
     $scope.load()

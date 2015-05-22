@@ -1,23 +1,25 @@
 class UsersController < ApplicationController
-  expose :users
-  expose :user, attributes: :user_params
+  model = User
+  expose(:model) { model }
+  expose :elements, model: model
+  expose :element, attributes: :element_params, model: model
 
   def create
-    user.save!
-    render partial:'user'
+    element.save!
+    render partial:'element'
   end
 
   def update
-    user.save!
-    render partial:'user'
+    element.save!
+    render partial:'element'
   end
 
   def destroy
-    user.destroy!
+    element.destroy!
     head 200
   end
 
-  def user_params
-    params.require(:user).permit(:name, :password)
+  def element_params
+    params.require(model.model_name.element).permit :name, :password
   end
 end

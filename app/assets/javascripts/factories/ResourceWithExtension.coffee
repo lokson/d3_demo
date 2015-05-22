@@ -4,6 +4,7 @@ angular.module("mi")
     class ResourceWithExtension
       constructor: (resource) ->
         @resource = resource
+        @route_key = resource.route_key
 
       all: ->
         if !@extension

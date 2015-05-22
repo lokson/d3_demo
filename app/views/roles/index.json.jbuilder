@@ -1,1 +1,1 @@
-json.array! roles, partial: 'role', as: :role
+json.array! elements, partial: 'element', as: :element

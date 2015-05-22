@@ -1,24 +1,26 @@
 controllers = angular.module 'controllers'
-controllers.controller 'RolesController', ['$scope', '$routeParams', 'Role', '$state'
-  ($scope, $routeParams, Role, $state) ->
+controllers.controller 'RolesController', ['Role', '$scope', '$routeParams', '$state'
+  (Role, $scope, $routeParams, $state) ->
+    model = arguments[0]
+
     $scope.load = ->
-      $scope.roles = Role.all()
+      $scope.elements = model.all()
 
     $scope.new = ->
-      $state.go('roles.new')
-        .then -> $scope.role = null
+      $state.go("#{model.route_key}.new")
+        .then -> $scope.element = null
 
-    $scope.edit = (role) ->
-      $state.go('roles.edit', id: role.id)
-        .then -> $scope.role = angular.copy(role)
+    $scope.edit = (element) ->
+      $state.go("#{model.route_key}.edit", id: element.id)
+        .then -> $scope.element = angular.copy(element)
 
-    $scope.save = (role) ->
-      Role.save role, ->
-        $state.go 'roles'
+    $scope.save = (element) ->
+      model.save element, ->
+        $state.go "#{model.route_key}"
 
-    $scope.delete = (role) ->
-      Role.delete role, ->
-        $state.go 'roles'
+    $scope.delete = (element) ->
+      model.delete element, ->
+        $state.go "#{model.route_key}"
 
     $scope.load()
 ]

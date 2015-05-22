@@ -1,24 +1,26 @@
 controllers = angular.module 'controllers'
-controllers.controller 'UsersController', ['$scope', '$routeParams', 'User', '$state'
-  ($scope, $routeParams, User, $state) ->
+controllers.controller 'UsersController', ['User', '$scope', '$routeParams', '$state'
+  (User, $scope, $routeParams, $state) ->
+    model = arguments[0]
+
     $scope.load = ->
-      $scope.users = User.all()
+      $scope.elements = model.all()
 
     $scope.new = ->
-      $state.go('users.new')
-        .then -> $scope.user = null
+      $state.go("#{model.route_key}.new")
+        .then -> $scope.element = null
 
-    $scope.edit = (user) ->
-      $state.go('users.edit', id: user.id)
-        .then -> $scope.user = angular.copy(user)
+    $scope.edit = (element) ->
+      $state.go("#{model.route_key}.edit", id: element.id)
+        .then -> $scope.element = angular.copy(element)
 
-    $scope.save = (user) ->
-      User.save user, ->
-        $state.go 'users'
+    $scope.save = (element) ->
+      model.save element, ->
+        $state.go "#{model.route_key}"
 
-    $scope.delete = (user) ->
-      User.delete user, ->
-        $state.go 'users'
+    $scope.delete = (element) ->
+      model.delete element, ->
+        $state.go "#{model.route_key}"
 
     $scope.load()
 ]

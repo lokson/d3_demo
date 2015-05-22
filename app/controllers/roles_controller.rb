@@ -1,23 +1,25 @@
 class RolesController < ApplicationController
-  expose :roles
-  expose :role, attributes: :role_params
+  model = Role
+  expose(:model) { model }
+  expose :elements, model: model
+  expose :element, attributes: :element_params, model: model
 
   def create
-    role.save!
-    render partial:'role'
+    element.save!
+    render partial:'element'
   end
 
   def update
-    role.save!
-    render partial:'role'
+    element.save!
+    render partial:'element'
   end
 
   def destroy
-    role.destroy!
+    element.destroy!
     head 200
   end
 
-  def role_params
-    params.require(:role).permit :name
+  def element_params
+    params.require(model.model_name.element).permit :name
   end
 end

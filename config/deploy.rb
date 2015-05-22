@@ -72,21 +72,30 @@ namespace :deploy do
     execute_in_current :tail, "-f log/#{fetch :rails_env}.log"
   end
 
+  task :nginx_stop do
+    execute_in_current :service, "nginx stop"
+  end
+
+  task :nginx_start do
+    execute_in_current :service, "nginx start"
+  end
+
+  # after :publishing, :wsoc_port_open
   # after :publishing, :wsoc_port_close
-  # after :publishing, :redis_start
   # after :publishing, :wsoc_stop
+  # after :publishing, :wsoc_start
+  # after :publishing, :redis_start
   # after :publishing, :redis_stop
   # after :publishing, :wsoc_log
   # after :publishing, :log
 
-
-
   after :publishing, :permit_temp
   after :publishing, :update_bins
   after :publishing, :assets_precompile
-  after :publishing, :db_reset
-  # after :publishing, :wsoc_port_open
-  # after :publishing, :wsoc_start
+
+  # after :publishing, :nginx_stop
+  # after :publishing, :db_reset
+  # after :publishing, :nginx_start
 
   after :publishing, :restart
 end

@@ -29,7 +29,7 @@ feature 'roles', js: true do
     expect(page).to have_content new[:name]
 
     # edit
-    f(:a, new[:name]).click()
+    find('a', text: new[:name]).click()
     expect(page).to have_content Role.first.name
     edits = attributes_for :role
     fill_many :role, with: edits
@@ -40,7 +40,7 @@ feature 'roles', js: true do
     expect(page).to have_content edits[:name]
 
     # delete
-    f(:a, edits[:name]).click()
+    find('a', text: edits[:name]).click()
     click_on 'Delete'
     expect(Role).to_not exist
 

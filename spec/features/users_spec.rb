@@ -29,7 +29,7 @@ feature 'users', js: true do
     expect(page).to have_content new[:name]
 
     # edit
-    f(:a, new[:name]).click()
+    find('a', text: new[:name]).click()
     expect(page).to have_content User.first.name
     edits = attributes_for :user
     fill_many :user, with: edits
@@ -40,7 +40,7 @@ feature 'users', js: true do
     expect(page).to have_content edits[:name]
 
     # delete
-    f(:a, edits[:name]).click()
+    find('a', text: edits[:name]).click()
     click_on 'Delete'
     expect(User).to_not exist
 

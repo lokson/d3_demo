@@ -20,17 +20,17 @@ feature 'roles', js: true do
     expect(Role).to_not exist
 
     # new
-    new = attributes_for :role
-    fill_in_many :role, with: new
+    attr = attributes_for :role
+    fill_in_many :role, with: attr
     click_on 'Create Role'
-    expect(Role.only).to have_attributes new
+    expect(Role.only).to have_attributes attr
 
     # index
-    expect(page).to have_content new[:name]
+    expect(page).to have_content attr[:name]
 
     # edit
-    find('a', text: new[:name]).click()
-    expect(page).to have_content Role.first.name
+    find('a', text: attr[:name]).click()
+    expect(page).to have_content attr[:name]
     edits = attributes_for :role
     fill_many :role, with: edits
     click_on 'Update Role'

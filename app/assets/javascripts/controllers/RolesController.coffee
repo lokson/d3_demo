@@ -13,12 +13,12 @@ controllers.controller 'RolesController', ['$scope', '$routeParams', 'Role', '$s
         .then -> $scope.role = angular.copy(role)
 
     $scope.save = (role) ->
-      Role.save(role)
-      $state.go 'roles'
+      Role.save role, ->
+        $state.go 'roles'
 
     $scope.delete = (role) ->
-      Role.delete(role)
-      $state.go 'roles'
+      Role.delete role, ->
+        $state.go 'roles'
 
     $scope.load()
 ]

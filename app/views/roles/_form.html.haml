@@ -2,4 +2,4 @@
   = f.ng_input :name
   = f.submit class:'btn btn-primary', 'ng-click':'save(role)', 'ng-disabled':'form.$invalid', onclick:'return false'
   - if role.persisted?
-    %button.btn.btn-danger{'ng-click':'delete(role)'} Delete
+    %button.btn.btn-danger{'ng-click':'delete(role)', onclick:'return false'} Delete

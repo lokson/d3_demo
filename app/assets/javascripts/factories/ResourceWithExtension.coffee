@@ -14,26 +14,42 @@ angular.module("mi")
         if val.id == obj.id
           return { key: key, obj: val }
 
-    save: (obj) ->
-      if obj.id
-        @update(obj)
-      else
-        @create(obj)
+    save: (obj, success, failure) ->
+      @update(obj, success, failure) if obj.id
+      @create(obj, success, failure) if !obj.id
 
-    create: (obj) ->
-      res = @resource.create(obj)
-      @extension.push(res)
+    create: (obj, success, failure) ->
+      @resource.create(obj).$promise.then(
+        (res) =>
+          @extension.push(res)
+          success?(res)
+        (res) ->
+          console.log res.data
+          failure?(res)
+      )
 
-    update: (obj) ->
-      res = @resource.update(obj)
-      key = @find(obj).key
-      for k of res
-        @extension[key][k] = res[k]
+    update: (obj, success, failure) ->
+      @resource.update(obj).$promise.then(
+        (res) =>
+          key = @find(res).key
+          for k of res
+            @extension[key][k] = res[k]
+          success?(res)
+        (res) ->
+          console.log res.data
+          failure?(res)
+      )
 
-    delete: (obj) ->
-      @resource.delete(id: obj.id)
-      key = @find(obj).key
-      @extension.splice(key, 1)
+    delete: (obj, success, failure) ->
+      @resource.delete(id: obj.id).$promise.then(
+        (res) =>
+          key = @find(obj).key
+          @extension.splice(key, 1)
+          success?(res)
+        (res) ->
+          console.log res.data
+          failure?(res)
+      )
 
     @standard_params: { id: "@id", format: 'json' }
     @standard_methods:

@@ -4,4 +4,4 @@
   = f.ng_input :name
   = f.submit class:'btn btn-primary', 'ng-click':'save(user)', 'ng-disabled':'form.$invalid', onclick:'return false'
   - if user.persisted?
-    %button.btn.btn-danger{'ng-click':'delete(user)'} Delete
+    %button.btn.btn-danger{'ng-click':'delete(user)', onclick:'return false'} Delete

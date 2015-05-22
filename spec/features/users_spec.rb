@@ -20,17 +20,17 @@ feature 'users', js: true do
     expect(User).to_not exist
 
     # new
-    new = attributes_for :user
-    fill_in_many :user, with: new
+    attr = attributes_for :user
+    fill_in_many :user, with: attr
     click_on 'Create User'
-    expect(User.only).to have_attributes new
+    expect(User.only).to have_attributes attr
 
     # index
-    expect(page).to have_content new[:name]
+    expect(page).to have_content attr[:name]
 
     # edit
-    find('a', text: new[:name]).click()
-    expect(page).to have_content User.first.name
+    find('a', text: attr[:name]).click()
+    expect(page).to have_content attr[:name]
     edits = attributes_for :user
     fill_many :user, with: edits
     click_on 'Update User'
@@ -46,5 +46,15 @@ feature 'users', js: true do
 
     # index
     expect(page).not_to have_content edits[:name]
+  end
+
+  scenario 'duplicate add' do
+    user = create :user
+    attr = user.attributes
+    visit '#users/new'
+    fill_in_many :user, with: attr
+    click_on 'Create User'
+    expect(page).to have_selector('a', text: user.name, count: 1)
+    expect(User.only).to have_attributes attr
   end
 end

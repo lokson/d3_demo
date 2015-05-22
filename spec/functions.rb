@@ -45,7 +45,7 @@ def fill_many(*args)
   options[:prefix] ||= options[:with].class.model_name.param_key
 
   options[:with].each do |key, value|
-    find(:fillable_field, "#{options[:prefix]}_#{key}", {}).set(value) rescue Capybara::ElementNotFound
+    find(:fillable_field, "#{options[:prefix]}_#{key}", {}).try(:set, value) rescue Capybara::ElementNotFound
   end
 end
 alias :fill_in_many :fill_many

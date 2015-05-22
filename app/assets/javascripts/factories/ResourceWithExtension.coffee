@@ -34,3 +34,9 @@ angular.module("mi")
       @resource.delete(id: obj.id)
       key = @find(obj).key
       @extension.splice(key, 1)
+
+    @standard_params: { id: "@id", format: 'json' }
+    @standard_methods:
+      'update': { method: 'PUT' }
+      'create': { method: 'POST' }
+      'delete': { method: 'DELETE' }

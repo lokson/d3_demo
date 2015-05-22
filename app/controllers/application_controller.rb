@@ -6,6 +6,9 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from Exception do |exception|
-    render json: { errors: { base: [exception.to_s] } }, status: 400
+    respond_to do |format|
+      format.json { render json: { errors: { flash: [exception.to_s] } }, status: 400 }
+      format.html { fail exception }
+    end
   end
 end

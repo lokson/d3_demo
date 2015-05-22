@@ -4,12 +4,12 @@ class UsersController < ApplicationController
 
   def create
     user.save!
-    render user
+    render partial:'user'
   end
 
   def update
     user.save!
-    render user
+    render partial:'user'
   end
 
   def destroy
@@ -18,6 +18,6 @@ class UsersController < ApplicationController
   end
 
   def user_params
-    params.require(:user).permit :name
+    params.require(:user).permit(:name, :password)
   end
 end

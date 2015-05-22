@@ -25,8 +25,8 @@ end
 require 'active_record'
 ActiveRecord::Base.class_eval do
   def self.only
-    raise "Expected to find one #{class_name} but none was found." if count == 0
-    raise "Expected to find one #{class_name} but #{count} were found." if count > 1
+    raise "Expected to find one #{name} but none was found." if count == 0
+    raise "Expected to find one #{name} but #{count} were found." if count > 1
     first
   end
 end

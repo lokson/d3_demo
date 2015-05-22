@@ -15,7 +15,8 @@ class ActionView::Helpers::FormBuilder
   include ApplicationHelper
 
   def ng_input(attribute)
-    model = @object.class
-    input attribute, input_html: { 'ng-model':"#{model.name.camelize(:lower)}.#{attribute}" }.merge(ng_validations model, attribute)
+    html = { 'ng-model':"#{@object.class.name.camelize(:lower)}.#{attribute}" }
+    html = html.merge(ng_validations @object, attribute)
+    input attribute, input_html: html
   end
 end

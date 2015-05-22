@@ -1,1 +1,6 @@
-= render 'form'
+= simple_form_for user, url: '', html: { name: 'form' } do |f|
+  = f.ng_input :name
+  = f.ng_input :password
+  = f.submit class:'btn btn-primary', 'ng-click':'save(user)', 'ng-disabled':'form.$invalid', onclick:'return false'
+  - if user.persisted?
+    %button.btn.btn-danger{'ng-click':'delete(user)', onclick:'return false'} Delete

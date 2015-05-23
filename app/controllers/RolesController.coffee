@@ -1,10 +1,12 @@
 controllers = angular.module 'controllers'
-controllers.controller 'RolesController', ['Role', '$scope', '$routeParams', '$state'
-  (Role, $scope, $routeParams, $state) ->
+controllers.controller 'RolesController', ['Role', '$scope', '$state'
+  (Role, $scope, $state) ->
     model = arguments[0]
 
     $scope.load = ->
-      $scope.elements = model.all()
+      model.all (elements) ->
+        $scope.elements = elements
+        $scope.element = model.copy($state.params) if $state.params.id
 
     $scope.new = ->
       $state.go("#{model.route_key}.new")

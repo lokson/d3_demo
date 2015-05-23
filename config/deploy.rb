@@ -80,14 +80,15 @@ namespace :deploy do
     execute_in_current :service, "nginx start"
   end
 
-  # after :publishing, :wsoc_port_open
-  # after :publishing, :wsoc_port_close
+  # after :publishing, :log
+  # after :publishing, :wsoc_log
+
   # after :publishing, :wsoc_stop
   # after :publishing, :wsoc_start
   # after :publishing, :redis_start
   # after :publishing, :redis_stop
-  # after :publishing, :wsoc_log
-  # after :publishing, :log
+  # after :publishing, :wsoc_port_open
+  # after :publishing, :wsoc_port_close
 
   after :publishing, :permit_temp
   after :publishing, :update_bins

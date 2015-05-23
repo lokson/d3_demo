@@ -1,83 +1,91 @@
 require 'rails_helper'
 
 feature 'users', js: true do
-  scenario 'search' do
-    create_pair :user
-    visit '/'
+  let(:model) { User }
 
-    expect(page).to have_content User.first.name
-    expect(page).to have_content User.second.name
-
-    fill_in "keywords", with: User.first.name
-
-    expect(page).to have_content User.first.name
-    expect(page).not_to have_content User.second.name
+  def index_path
+    "/##{model.model_name.route_key}"
   end
+  def new_path
+    "#{index_path}/new"
+  end
+  def edit_path(id)
+    "#{index_path}/#{id}/edit"
+  end
+
+  let(:data_a) { attributes_for model }
+  let(:data_b) { attributes_for model }
+
+
 
   scenario 'crud' do
-    visit '/'
-    find('.glyphicon-plus').click()
+    visit index_path
+    click_css '.glyphicon-plus'
+    fill_in_many model, with: data_a
+    click_on "Create #{model}"
+    wait
 
-    attr = attributes_for :user
-    fill_in_many :user, with: attr
-    click_on 'Create User'
+    expect(model.only).to have_attributes data_a
+    expect(page).to have_content data_a[:name]
 
-    sleep(0.1)
-    expect(User.only).to have_attributes attr
-    expect(page).to have_content attr[:name]
+    click_a data_a[:name]
+    data_b[:password] = 'changed'
+    fill_many model, with: data_b
+    click_on "Update #{model}"
+    wait
 
-    find('a', text: attr[:name]).click()
-    expect(page).to have_content attr[:name]
-    edits = attributes_for :user
-    edits[:password] = 'changed'
-    fill_many :user, with: edits
-    click_on 'Update User'
+    expect(model.only).to have_attributes data_b
+    expect(page).to have_content data_b[:name]
 
-    sleep(0.1)
-    expect(User.only).to have_attributes edits
-    expect(page).to have_content edits[:name]
-
-    find('a', text: edits[:name]).click()
+    click_a data_b[:name]
     click_on 'Delete'
+    wait
 
-    sleep(0.1)
     expect(User).to_not exist
-    expect(page).not_to have_content edits[:name]
+    expect(page).not_to have_content data_b[:name]
   end
 
-  scenario 'duplicate add' do
-    user = create :user
-    attr = user.attributes
-    visit '#users/new'
-    fill_in_many :user, with: attr
-    click_on 'Create User'
+  scenario 'create, no password' do
+    visit new_path
+    data_a.delete :password
+    fill_in_many model, with: data_a
 
-    sleep(0.1)
-    expect(User.only).to have_attributes attr
-    expect(page).to have_selector('a', text: user.name, count: 1)
+    expect(page).to_not have_button "Create #{model}"
   end
 
-  scenario 'create without password' do
-    visit '/'
-    find('.glyphicon-plus').click()
-    attr = attributes_for :user
-    attr.delete(:password)
-    fill_in_many :user, with: attr
+  scenario 'create, duplicate name' do
+    element = create model
+    visit new_path
+    data_a[:name] = element.name
+    fill_in_many model, with: data_a
+    click_on "Create #{model}"
+    wait
 
-    expect(page).to_not have_button('Create User')
+    expect(model.only).to have_attributes element.attributes
+    expect(page).to have_selector('a', text: element.name, count: 1)
   end
 
-  scenario 'update without password' do
-    user = create :user
-    attr = user.attributes
-    edits = attributes_for :user
-    edits.delete(:password)
-    visit '/'
-    find('a', text: user.name).click()
-    fill_many :user, with: edits
+  scenario 'update, no password' do
+    element = create model
+    visit edit_path element.id
+    data_a.delete :password
+    fill_many model, with: data_a
     click_on 'Update User'
+    wait
 
-    sleep(0.1)
-    expect(User.only).to have_attributes edits.merge({ password: attr["password"] })
+    expect(model.only).to have_attributes data_a.merge password: element.password
+  end
+
+  scenario 'search' do
+    create_pair model
+    visit index_path
+
+    expect(page).to have_content model.first.name
+    expect(page).to have_content model.second.name
+
+    fill_in 'keywords', with: model.first.name
+
+    expect(page).to have_content model.first.name
+    expect(page).not_to have_content model.second.name
   end
 end

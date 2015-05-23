@@ -33,12 +33,14 @@ end
 
 # fill_many(customer)
 # fill_many(customer, with: data)
+# fill_many(Customer, with: data)
 # fill_many(prefix: 'customer', with: data)
 def fill_many(*args)
   if args.size == 1
     options = args.first
   else
     options = args.second.merge({ prefix: args.first })
+    options[:prefix] = options[:prefix].model_name.param_key if options[:prefix].respond_to? :model_name
   end
   return if !options[:with]
   options[:with] = options[:with].attributes if options[:with].is_a? ActiveRecord::Base
@@ -49,3 +51,15 @@ def fill_many(*args)
   end
 end
 alias :fill_in_many :fill_many
+
+def wait
+  sleep(0.1)
+end
+
+def click_a(text)
+  find('a', text: text).click()
+end
+
+def click_css(*options)
+  find(*options).click
+end

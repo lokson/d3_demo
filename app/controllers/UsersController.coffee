@@ -1,10 +1,12 @@
 controllers = angular.module 'controllers'
-controllers.controller 'UsersController', ['User', '$scope', '$routeParams', '$state'
-  (User, $scope, $routeParams, $state) ->
+controllers.controller 'UsersController', ['User', '$scope', '$state'
+  (User, $scope, $state) ->
     model = arguments[0]
 
     $scope.load = ->
-      $scope.elements = model.all()
+      model.all (elements) ->
+        $scope.elements = elements
+        $scope.element = model.copy($state.params) if $state.params.id
 
     $scope.new = ->
       $state.go("#{model.route_key}.new")

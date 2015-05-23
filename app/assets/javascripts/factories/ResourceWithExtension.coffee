@@ -6,15 +6,26 @@ angular.module("mi")
         @resource = resource
         @route_key = resource.route_key
 
-      all: ->
+      all: (success, failure) ->
         if !@extension
-          @extension = @resource.query()
+          @resource.query().$promise.then(
+            (res) =>
+              @extension = res
+              success?(res)
+            (res) =>
+              @flash(res.data)
+              failure?(res)
+          )
         @extension
 
       find: (obj) ->
         for key, val of @all()
-          if val.id == obj.id
+          if val.id == parseInt(obj.id)
             return { key: key, obj: val }
+        { key: null, obj: null }
+
+      copy: (obj) ->
+        angular.copy(@find(obj).obj)
 
       save: (obj, success, failure) ->
         @update(obj, success, failure) if obj.id

@@ -1,45 +1,59 @@
 require 'rails_helper'
 
 feature 'roles', js: true do
-  scenario 'search' do
-    create_pair :role
-    visit '/#roles'
+  let(:model) { Role }
 
-    expect(page).to have_content Role.first.name
-    expect(page).to have_content Role.second.name
-
-    fill_in "keywords", with: Role.first.name
-
-    expect(page).to have_content Role.first.name
-    expect(page).not_to have_content Role.second.name
+  def index_path
+    "/##{model.model_name.route_key}"
+  end
+  def new_path
+    "#{index_path}/new"
+  end
+  def edit_path(id)
+    "#{index_path}/#{id}/edit"
   end
 
+  let(:data_a) { attributes_for model }
+  let(:data_b) { attributes_for model }
+
+
+
   scenario 'crud' do
-    visit '/#roles'
-    find('.glyphicon-plus').click()
-    attr = attributes_for :role
-    fill_in_many :role, with: attr
-    click_on 'Create Role'
+    visit index_path
+    click_css '.glyphicon-plus'
+    fill_in_many model, with: data_a
+    click_on "Create #{model}"
+    wait
 
-    sleep(0.1)
-    expect(Role.only).to have_attributes attr
-    expect(page).to have_content attr[:name]
+    expect(model.only).to have_attributes data_a
+    expect(page).to have_content data_a[:name]
 
-    find('a', text: attr[:name]).click()
-    expect(page).to have_content attr[:name]
-    edits = attributes_for :role
-    fill_many :role, with: edits
-    click_on 'Update Role'
+    click_a data_a[:name]
+    fill_many model, with: data_b
+    click_on "Update #{model}"
+    wait
 
-    sleep(0.1)
-    expect(Role.only).to have_attributes edits
-    expect(page).to have_content edits[:name]
+    expect(model.only).to have_attributes data_b
+    expect(page).to have_content data_b[:name]
 
-    find('a', text: edits[:name]).click()
+    click_a data_b[:name]
     click_on 'Delete'
+    wait
 
-    sleep(0.1)
-    expect(Role).to_not exist
-    expect(page).not_to have_content edits[:name]
+    expect(User).to_not exist
+    expect(page).not_to have_content data_b[:name]
+  end
+
+  scenario 'search' do
+    create_pair model
+    visit index_path
+
+    expect(page).to have_content model.first.name
+    expect(page).to have_content model.second.name
+
+    fill_in 'keywords', with: model.first.name
+
+    expect(page).to have_content model.first.name
+    expect(page).not_to have_content model.second.name
   end
 end

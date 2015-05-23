@@ -15,30 +15,34 @@ mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider'
     flashProvider.infoClassnames.push 'alert-info'
     flashProvider.successClassnames.push 'alert-success'
 
-    root_path = $('#root_path').html()
+    root_path = window.root_path
 
     $urlRouterProvider.otherwise("/users");
     $stateProvider
       .state('users',
         url: '/users'
         templateUrl: "#{root_path}users"
-#        controller: 'UsersController'
+
       ).state('users.new',
         url: '/new'
         templateUrl: "#{root_path}users/new"
+
       ).state('users.edit',
         url: '/:id/edit'
         templateUrl: (params) -> "#{root_path}users/#{params.id}/edit"
+
       ).state('roles',
         url: '/roles'
         templateUrl: "#{root_path}roles"
-        controller: 'RolesController'
+
       ).state('roles.new',
         url: '/new'
         templateUrl: "#{root_path}roles/new"
+
       ).state('roles.edit',
         url: '/:id/edit'
         templateUrl: (params) -> "#{root_path}roles/#{params.id}/edit"
+
       )
 
 ]

@@ -5,8 +5,7 @@
     %title Mi
     = stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track' => true
     = javascript_include_tag 'application', 'data-turbolinks-track' => true
+    :coffee
+      window.root_path = "#{root_path}"
   %body{'ng-app':'mi'}
     = yield
-
-    -#todo: think about other solutions
-    #root_path{style:'display: none'}= root_path

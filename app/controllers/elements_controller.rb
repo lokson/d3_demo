@@ -4,7 +4,7 @@ module ElementsController
       expose :elements, model: model
       expose :element, attributes: :element_params, model: model
       expose :model, model: model
-      # todo: this is required, is it Rails bug?
+      # walkaround to "The action 'create' could not be found for Controller", Rails bug?
       def create; super end
     end
   end

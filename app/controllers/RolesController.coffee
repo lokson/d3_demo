@@ -1,28 +1,30 @@
 controllers = angular.module 'controllers'
-controllers.controller 'RolesController', ['Role', '$scope', '$state'
-  (Role, $scope, $state) ->
-    model = arguments[0]
 
-    $scope.load = ->
-      model.load (elements) ->
-        $scope.elements = elements
-        $scope.element = model.copy($state.params) if $state.params.id
+class ElementsController
+  constructor: (@model, @scope, @state) ->
+    @model.load (elements) =>
+      @scope.elements = elements
+      @scope.element = @model.copy(@state.params) if @state.params.id
 
-    $scope.new = ->
-      $state.go("#{model.route_key}.new")
-        .then -> $scope.element = null
+  new: ->
+    @state.go("#{@model.route_key}.new")
+    .then => @scope.element = null
 
-    $scope.edit = (element) ->
-      $state.go("#{model.route_key}.edit", id: element.id)
-        .then -> $scope.element = angular.copy(element)
+  edit: (element) ->
+    @state.go("#{@model.route_key}.edit", id: element.id)
+    .then => @scope.element = angular.copy(element)
 
-    $scope.save = (element) ->
-      model.save element, ->
-        $state.go "#{model.route_key}"
+  save: (element) ->
+    @model.save element, =>
+      @state.go "#{@model.route_key}"
 
-    $scope.delete = (element) ->
-      model.delete element, ->
-        $state.go "#{model.route_key}"
+  delete: (element) ->
+    @model.delete element, =>
+      @state.go "#{@model.route_key}"
 
-    $scope.load()
-]
+class RolesController extends ElementsController
+  @$inject: ['Role', '$scope', '$state']
+  constructor: (@model, @scope, @state) ->
+    super
+
+controllers.controller 'RolesController', RolesController

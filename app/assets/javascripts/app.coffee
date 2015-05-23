@@ -22,7 +22,7 @@ mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider'
       .state('users',
         url: '/users'
         templateUrl: "#{root_path}users"
-        controller: 'UsersController'
+#        controller: 'UsersController'
       ).state('users.new',
         url: '/new'
         templateUrl: "#{root_path}users/new"

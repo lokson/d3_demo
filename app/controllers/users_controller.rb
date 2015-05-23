@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  def self.model; User end
+  @model = User
   include ElementsController
 
   def element_params

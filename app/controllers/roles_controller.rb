@@ -1,5 +1,5 @@
 class RolesController < ApplicationController
-  def self.model; Role end
+  @model = Role
   include ElementsController
 
   def element_params

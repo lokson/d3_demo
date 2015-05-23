@@ -1,11 +1,11 @@
 mi = angular.module 'mi', [
-  'ngRoute',
-  'ngResource',
-  'ngAnimate',
-  'ui.router',
-  'controllers',
-  'angular-flash.service',
-  'angular-flash.flash-alert-directive',
+  'ngRoute'
+  'ngResource'
+  'ngAnimate'
+  'ui.router'
+  'controllers'
+  'angular-flash.service'
+  'angular-flash.flash-alert-directive'
 ]
 
 mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider'
@@ -44,7 +44,6 @@ mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider'
         templateUrl: (params) -> "#{root_path}roles/#{params.id}/edit"
 
       )
-
 ]
 
 controllers = angular.module 'controllers', []

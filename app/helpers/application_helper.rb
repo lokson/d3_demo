@@ -1,3 +1,4 @@
+# todo: improve and publish as gem
 module ApplicationHelper
   def ng_validations(model, attribute)
     result = {}

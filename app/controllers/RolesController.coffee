@@ -4,7 +4,7 @@ controllers.controller 'RolesController', ['Role', '$scope', '$state'
     model = arguments[0]
 
     $scope.load = ->
-      model.all (elements) ->
+      model.load (elements) ->
         $scope.elements = elements
         $scope.element = model.copy($state.params) if $state.params.id
 

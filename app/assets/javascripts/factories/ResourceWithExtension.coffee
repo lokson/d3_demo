@@ -6,26 +6,32 @@ angular.module("mi")
         @resource = resource
         @route_key = resource.route_key
 
-      all: (success, failure) ->
-        if !@extension
-          @resource.query().$promise.then(
-            (res) =>
-              @extension = res
-              success?(res)
-            (res) =>
-              @flash(res.data)
-              failure?(res)
-          )
+      all: ->
+        @load() if !@extension
+        # todo: load() is asynchronous and results will not be ready,
+        # check "return" in callback or look for synchronous version
         @extension
 
+      # find(id: 1)
       find: (obj) ->
         for key, val of @all()
           if val.id == parseInt(obj.id)
             return { key: key, obj: val }
         { key: null, obj: null }
 
+      # copy(id: 1)
       copy: (obj) ->
         angular.copy(@find(obj).obj)
+
+      load: (success, failure) ->
+        @resource.query().$promise.then(
+          (res) =>
+            @extension = res
+            success?(res)
+          (res) =>
+            @flash(res.data)
+            failure?(res)
+        )
 
       save: (obj, success, failure) ->
         @update(obj, success, failure) if obj.id

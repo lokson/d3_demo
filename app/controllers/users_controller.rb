@@ -3,6 +3,6 @@ class UsersController < ApplicationController
   include ElementsController
 
   def element_params
-    params.require(param_key).permit :name, :password
+    params.require(param_key).permit :name, :password, :role_id
   end
 end

@@ -1,4 +1,4 @@
-# todo: find better way to pass it to angular (below is as a global)
+# todo better way to pass to angular (window. is global)
 class window.ElementsController
   constructor: (@model, @scope, @state) ->
     @model.load (elements) =>
@@ -7,11 +7,11 @@ class window.ElementsController
 
   new: ->
     @state.go("#{@model.route_key}.new")
-    .then => @scope.element = null
+      .then => @scope.element = null
 
   edit: (element) ->
     @state.go("#{@model.route_key}.edit", id: element.id)
-    .then => @scope.element = angular.copy(element)
+      .then => @scope.element = angular.copy(element)
 
   save: (element) ->
     @model.save element, =>

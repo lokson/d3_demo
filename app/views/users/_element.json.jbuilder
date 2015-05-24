@@ -1,1 +1,1 @@
-json.(element, :id, :name)
+json.(element, :id, :name, :role_id)

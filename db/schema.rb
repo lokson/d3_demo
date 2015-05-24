@@ -23,6 +23,7 @@ ActiveRecord::Schema.define(version: 1) do
   end
 
   create_table "users", force: :cascade do |t|
+    t.integer  "role_id"
     t.string   "name"
     t.string   "password"
     t.datetime "created_at", null: false

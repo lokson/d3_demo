@@ -1,5 +1,5 @@
 class LiveController < WebsocketRails::BaseController
-  # todo: find a way to broadcast from regular controller, and bring this back!
+  # todo way to broadcast from regular controller
   # def create
   #   user = User.find(message["id"])
   #   broadcast_message :create_success, user, namespace: :users

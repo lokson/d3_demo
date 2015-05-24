@@ -1,4 +1,4 @@
-# todo: improve and publish as gem
+# todo improve and go open source
 module ApplicationHelper
   def ng_validations(model, attribute)
     result = {}
@@ -12,12 +12,33 @@ module ApplicationHelper
   end
 end
 
+# todo delete
+SimpleForm::FormBuilder
+
+# todo refactor into own NgFormBuilder
 class ActionView::Helpers::FormBuilder
   include ApplicationHelper
 
-  def ng_input(attribute)
-    html = { 'ng-model':"element.#{attribute}" }
-    html = html.merge(ng_validations @object, attribute)
-    input attribute, input_html: html
+  # todo :ng_model as a possible key
+  # calls input with defaults
+  # f.input ... input_html: { 'ng-model':'attribute_name' }
+  # if field has validations, they will be added
+  # f.input ... input_html: { 'ng-model':'attribute_name', 'ng-required':'true' }
+  def ng_input(attribute_name, options = {}, &block)
+    options[:input_html] ||= {}
+    options[:input_html]['ng-model'] ||="element.#{attribute_name}"
+    options[:input_html] = ng_validations(@object, attribute_name).merge! options[:input_html]
+    input(attribute_name, options, &block)
+  end
+
+  # calls association with defaults
+  # f.association ... input_html: { 'ng-model':"element.#{association}_id" }
+  # if field has validations, they will be added
+  # f.association ... input_html: { 'ng-model':"element.#{association}_id", 'ng-required':'true' }
+  def ng_association(association, options = {}, &block)
+    options[:input_html] ||= {}
+    options[:input_html]['ng-model'] ||= "element.#{association}_id"
+    options[:input_html] = ng_validations(@object, association).merge! options[:input_html]
+    association(association, options, &block)
   end
 end

@@ -56,4 +56,10 @@ feature 'roles', js: true do
     expect(page).to have_content model.first.name
     expect(page).not_to have_content model.second.name
   end
+
+  xscenario 'create, duplicate name' do
+  end
+
+  xscenario 'delete, with users' do
+  end
 end

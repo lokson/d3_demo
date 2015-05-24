@@ -19,22 +19,28 @@ feature 'users', js: true do
 
 
   scenario 'crud' do
+    role_a = create :role
+    role_b = create :role
     visit index_path
     click_css '.glyphicon-plus'
     fill_in_many model, with: data_a
+    select role_a.name
     click_on "Create #{model}"
     wait
 
     expect(model.only).to have_attributes data_a
+    expect(model.only.role_id).to eq role_a.id
     expect(page).to have_content data_a[:name]
 
     click_a data_a[:name]
     data_b[:password] = 'changed'
     fill_many model, with: data_b
+    select role_b.name
     click_on "Update #{model}"
     wait
 
     expect(model.only).to have_attributes data_b
+    expect(model.only.role_id).to eq role_b.id
     expect(page).to have_content data_b[:name]
 
     click_a data_b[:name]
@@ -46,8 +52,18 @@ feature 'users', js: true do
   end
 
   scenario 'create, no password' do
+    role_a = create :role
     visit new_path
     data_a.delete :password
+    fill_in_many model, with: data_a
+    select role_a.name
+
+    expect(page).to_not have_button "Create #{model}"
+  end
+
+  scenario 'create, no role' do
+    role_a = create :role
+    visit new_path
     fill_in_many model, with: data_a
 
     expect(page).to_not have_button "Create #{model}"
@@ -58,6 +74,7 @@ feature 'users', js: true do
     visit new_path
     data_a[:name] = element.name
     fill_in_many model, with: data_a
+    select Role.only.name
     click_on "Create #{model}"
     wait
 

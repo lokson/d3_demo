@@ -24,54 +24,40 @@ angular.module("mi")
         angular.copy(@find(obj).obj)
 
       load: (success, failure) ->
-        @resource.query().$promise.then(
-          (res) =>
-            @extension = res
-            success?(res)
-          (res) =>
-            @flash(res.data)
-            failure?(res)
-        )
+        p = @resource.query().$promise
+        p.then (res) => @extension = res
+        p.then null, @on_error
+        p.then success, failure
 
       save: (obj, success, failure) ->
         @update(obj, success, failure) if obj.id
         @create(obj, success, failure) if !obj.id
 
       create: (obj, success, failure) ->
-        @resource.create(obj).$promise.then(
-          (res) =>
-            @extension.push(res)
-            success?(res)
-          (res) =>
-            @flash(res.data)
-            failure?(res)
-        )
+        p = @resource.create(obj).$promise
+        p.then (res) => @extension.push(res)
+        p.then null, @on_error
+        p.then success, failure
 
       update: (obj, success, failure) ->
-        @resource.update(obj).$promise.then(
-          (res) =>
-            key = @find(res).key
-            for k of res
-              @extension[key][k] = res[k]
-            success?(res)
-          (res) =>
-            @flash(res.data)
-            failure?(res)
-        )
+        p = @resource.update(obj).$promise
+        p.then (res) =>
+          key = @find(res).key
+          for k of res
+            @extension[key][k] = res[k]
+        p.then null, @on_error
+        p.then success, failure
 
       delete: (obj, success, failure) ->
-        @resource.delete(id: obj.id).$promise.then(
-          (res) =>
-            key = @find(obj).key
-            @extension.splice(key, 1)
-            success?(res)
-          (res) =>
-            @flash(res.data)
-            failure?(res)
-        )
+        p = @resource.delete(id: obj.id).$promise
+        p.then (res) =>
+          key = @find(obj).key
+          @extension.splice(key, 1)
+        p.then null, @on_error
+        p.then success, failure
 
-      flash: (data) ->
-        flash.error = error for error in data.errors.flash
+      on_error: (res) => @flash(res.data)
+      flash: (data) -> flash.error = error for error in data.errors.flash
 
       @standard_params: { id: "@id", format: 'json' }
       @standard_methods:

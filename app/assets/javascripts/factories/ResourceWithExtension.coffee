@@ -24,37 +24,37 @@ angular.module("mi")
         angular.copy(@find(obj).obj)
 
       load: (success, failure) ->
-        p = @resource.query().$promise
-        p.then (res) => @extension = res
-        p.then null, @on_error
-        p.then success, failure
+        @resource.query().$promise
+          .then (res) => @extension = res
+          .then null, @on_error
+          .then success, failure
 
       save: (obj, success, failure) ->
         @update(obj, success, failure) if obj.id
         @create(obj, success, failure) if !obj.id
 
       create: (obj, success, failure) ->
-        p = @resource.create(obj).$promise
-        p.then (res) => @extension.push(res)
-        p.then null, @on_error
-        p.then success, failure
+        @resource.create(obj).$promise
+          .then (res) => @extension.push(res)
+          .then null, @on_error
+          .then success, failure
 
       update: (obj, success, failure) ->
-        p = @resource.update(obj).$promise
-        p.then (res) =>
-          key = @find(res).key
-          for k of res
-            @extension[key][k] = res[k]
-        p.then null, @on_error
-        p.then success, failure
+        @resource.update(obj).$promise
+          .then (res) =>
+            key = @find(res).key
+            for k of res
+              @extension[key][k] = res[k]
+          .then null, @on_error
+          .then success, failure
 
       delete: (obj, success, failure) ->
-        p = @resource.delete(id: obj.id).$promise
-        p.then (res) =>
-          key = @find(obj).key
-          @extension.splice(key, 1)
-        p.then null, @on_error
-        p.then success, failure
+        @resource.delete(id: obj.id).$promise
+          .then (res) =>
+            key = @find(obj).key
+            @extension.splice(key, 1)
+          .then null, @on_error
+          .then success, failure
 
       on_error: (res) => @flash(res.data)
       flash: (data) -> flash.error = error for error in data.errors.flash

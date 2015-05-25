@@ -8,6 +8,8 @@
     "angular-mocks": "latest",
     "angular-flash": "latest",
     "angular-animate": "latest",
-    "angular-ui-router": "latest"
+    "angular-ui-router": "latest",
+    "restangular": "latest",
+    "underscore": "latest"
   }
 }

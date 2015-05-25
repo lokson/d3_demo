@@ -18,6 +18,8 @@
 //= require angular-flash/dist/angular-flash
 //= require angular-animate/angular-animate
 //= require angular-ui-router/release/angular-ui-router
+//= require underscore/underscore
+//= require restangular/src/restangular
 //= require_tree .
 //= require_tree ../../controllers
 //= require_tree ../../models

@@ -6,6 +6,7 @@ mi = angular.module 'mi', [
   'controllers'
   'angular-flash.service'
   'angular-flash.flash-alert-directive'
+  'restangular'
 ]
 
 mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider'

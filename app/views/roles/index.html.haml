@@ -1,7 +1,7 @@
-%div{ 'ng-controller':'RolesController as c'}
+%div{'ng-controller':'RolesController as c'}
   .col-sm-2
     %input{name:'keywords', 'ng-model':'keywords'}
-    %ul.list-unstyled.animate-leave{'ng-repeat':'element in c.elements | filter:keywords | orderBy:"name"' }
+    %ul.list-unstyled.animate-leave{'ng-repeat':'element in c.elements | filter: keywords | orderBy: "name"' }
       %li
         %a{'ng-click':'c.edit(element)'}
           {{element.name}}

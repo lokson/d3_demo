@@ -1,4 +1,4 @@
-# todo improve and go open source
+# todo make it open source
 module ApplicationHelper
   def ng_validations(model, attribute)
     result = {}

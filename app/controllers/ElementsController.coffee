@@ -2,6 +2,9 @@ angular.module('mi')
 
 class @ElementsController
   constructor: (@model, @state) ->
+    @load()
+
+  load: ->
     @model.load (elements) =>
       @elements = elements
       @element = @model.copy(@state.params) if @state.params.id

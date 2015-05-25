@@ -19,14 +19,14 @@ SimpleForm::FormBuilder
 class ActionView::Helpers::FormBuilder
   include ApplicationHelper
 
-  # todo :ng_model as a possible key
+  # todo :ng_model (instead :'ng-model') as a possible key
   # calls input with defaults
   # f.input ... input_html: { 'ng-model':'attribute_name' }
   # if field has validations, they will be added
   # f.input ... input_html: { 'ng-model':'attribute_name', 'ng-required':'true' }
   def ng_input(attribute_name, options = {}, &block)
     options[:input_html] ||= {}
-    options[:input_html]['ng-model'] ||="element.#{attribute_name}"
+    options[:input_html]['ng-model'] ||="c.element.#{attribute_name}"
     options[:input_html] = ng_validations(@object, attribute_name).merge! options[:input_html]
     input(attribute_name, options, &block)
   end
@@ -37,7 +37,7 @@ class ActionView::Helpers::FormBuilder
   # f.association ... input_html: { 'ng-model':"element.#{association}_id", 'ng-required':'true' }
   def ng_association(association, options = {}, &block)
     options[:input_html] ||= {}
-    options[:input_html]['ng-model'] ||= "element.#{association}_id"
+    options[:input_html]['ng-model'] ||= "c.element.#{association}_id"
     options[:input_html] = ng_validations(@object, association).merge! options[:input_html]
     association(association, options, &block)
   end

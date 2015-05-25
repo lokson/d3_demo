@@ -1,17 +1,18 @@
-# todo better way to pass to angular (window. is global)
-class window.ElementsController
-  constructor: (@model, @scope, @state) ->
+angular.module('mi')
+
+class @ElementsController
+  constructor: (@model, @state) ->
     @model.load (elements) =>
-      @scope.elements = elements
-      @scope.element = @model.copy(@state.params) if @state.params.id
+      @elements = elements
+      @element = @model.copy(@state.params) if @state.params.id
 
   new: ->
     @state.go("#{@model.route_key}.new")
-      .then => @scope.element = null
+      .then => @element = null
 
   edit: (element) ->
     @state.go("#{@model.route_key}.edit", id: element.id)
-      .then => @scope.element = angular.copy(element)
+      .then => @element = angular.copy(element)
 
   save: (element) ->
     @model.save element, =>

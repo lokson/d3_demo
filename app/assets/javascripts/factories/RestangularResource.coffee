@@ -1,14 +1,18 @@
-angular.module("mi").factory 'ResourceWithExtension', ['flash', (flash) ->
-  class ResourceWithExtension
+# todo: extract ResourceWithExtension as decorator
+angular.module("mi").factory 'RestangularResource', ['flash', 'Restangular', (flash, Restangular) ->
+  class RestangularResource
     constructor: (resource) ->
       @resource = resource
-      @route_key = resource.route_key
 
     all: ->
       @load() if !@extension
-      # todo: load() is asynchronous and results will not be ready,
-      # check "return" in callback or look for synchronous version
       @extension
+
+    load: (success, failure) ->
+      @resource.getList()
+        .then (res) => @extension = res
+        .then null, @on_error
+        .then success, failure
 
     # find(id: 1)
     find: (obj) ->
@@ -19,26 +23,20 @@ angular.module("mi").factory 'ResourceWithExtension', ['flash', (flash) ->
 
     # copy(id: 1)
     copy: (obj) ->
-      angular.copy(@find(obj).obj)
-
-    load: (success, failure) ->
-      @resource.query().$promise
-        .then (res) => @extension = res
-        .then null, @on_error
-        .then success, failure
+      Restangular.copy(@find(obj).obj)
 
     save: (obj, success, failure) ->
       @update(obj, success, failure) if obj.id
       @create(obj, success, failure) if !obj.id
 
     create: (obj, success, failure) ->
-      @resource.create(obj).$promise
+      @extension.post(obj)
         .then (res) => @extension.push(res)
         .then null, @on_error
         .then success, failure
 
     update: (obj, success, failure) ->
-      @resource.update(obj).$promise
+      obj.put()
         .then (res) =>
           key = @find(res).key
           for k of res
@@ -47,7 +45,7 @@ angular.module("mi").factory 'ResourceWithExtension', ['flash', (flash) ->
         .then success, failure
 
     delete: (obj, success, failure) ->
-      @resource.delete(id: obj.id).$promise
+      obj.remove()
         .then (res) =>
           key = @find(obj).key
           @extension.splice(key, 1)
@@ -56,10 +54,4 @@ angular.module("mi").factory 'ResourceWithExtension', ['flash', (flash) ->
 
     on_error: (res) => @flash(res.data)
     flash: (data) -> flash.error = error for error in data.errors.flash
-
-    @standard_params: { id: "@id", format: 'json' }
-    @standard_methods:
-      'update': { method: 'PUT' }
-      'create': { method: 'POST' }
-      'delete': { method: 'DELETE' }
 ]

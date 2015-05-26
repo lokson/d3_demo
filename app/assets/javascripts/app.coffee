@@ -9,14 +9,17 @@ mi = angular.module 'mi', [
   'restangular'
 ]
 
-mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider'
-  (flashProvider, $stateProvider, $urlRouterProvider) ->
+mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider', 'RestangularProvider'
+  (flashProvider, $stateProvider, $urlRouterProvider, RestangularProvider) ->
     flashProvider.errorClassnames.push 'alert-danger'
     flashProvider.warnClassnames.push 'alert-warning'
     flashProvider.infoClassnames.push 'alert-info'
     flashProvider.successClassnames.push 'alert-success'
 
     root_path = window.root_path
+
+    RestangularProvider.setDefaultRequestParams(format: 'json')
+    RestangularProvider.setBaseUrl(root_path)
 
     $urlRouterProvider.otherwise("/users");
     $stateProvider

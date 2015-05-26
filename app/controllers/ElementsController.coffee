@@ -10,17 +10,17 @@ class @ElementsController
       @element = @model.copy(@state.params) if @state.params.id
 
   new: ->
-    @state.go("#{@model.route_key}.new")
-      .then => @element = null
+    @state.go("#{@elements.route}.new")
+    .then => @element = null
 
   edit: (element) ->
-    @state.go("#{@model.route_key}.edit", id: element.id)
-      .then => @element = angular.copy(element)
+    @state.go("#{@elements.route}.edit", id: element.id)
+    .then => @element = @model.copy(element)
 
   save: (element) ->
     @model.save element, =>
-      @state.go "#{@model.route_key}"
+      @state.go @elements.route
 
   delete: (element) ->
     @model.delete element, =>
-      @state.go "#{@model.route_key}"
+      @state.go @elements.route

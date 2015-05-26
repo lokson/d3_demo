@@ -12,5 +12,6 @@ class CreateDatabase < ActiveRecord::Migration
       t.string :name
       t.timestamps null: false
     end
+    add_index :roles, :name, unique: true
   end
 end

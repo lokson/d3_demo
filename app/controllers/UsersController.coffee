@@ -6,9 +6,9 @@ angular.module('mi').controller 'UsersController',
     constructor: ->
       # 3 ways to debug:
       # a. inspect in console
-      # window.c = @
+#      window.c = @
       # b. break in firefox
-      # debugger
+#      debugger
       # c. break in ruby files
-      # byebug
+#      byebug
       super

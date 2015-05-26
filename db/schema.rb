@@ -16,6 +16,12 @@ ActiveRecord::Schema.define(version: 1) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "groups", force: :cascade do |t|
+    t.string "name"
+  end
+
+  add_index "groups", ["name"], name: "index_groups_on_name", unique: true, using: :btree
+
   create_table "roles", force: :cascade do |t|
     t.integer  "view_id"
     t.string   "name"
@@ -24,6 +30,13 @@ ActiveRecord::Schema.define(version: 1) do
   end
 
   add_index "roles", ["name"], name: "index_roles_on_name", unique: true, using: :btree
+
+  create_table "subgroups", force: :cascade do |t|
+    t.integer "group_id"
+    t.string  "name"
+  end
+
+  add_index "subgroups", ["name"], name: "index_subgroups_on_name", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.integer  "role_id"
@@ -34,6 +47,13 @@ ActiveRecord::Schema.define(version: 1) do
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
+
+  create_table "view_groups", force: :cascade do |t|
+    t.integer  "view_id"
+    t.integer  "group_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "views", force: :cascade do |t|
     t.string "name"

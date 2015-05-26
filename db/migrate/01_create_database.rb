@@ -19,5 +19,22 @@ class CreateDatabase < ActiveRecord::Migration
       t.string :name
     end
     add_index :views, :name, unique: true
+
+    create_table :view_groups do |t|
+      t.references :view
+      t.references :group
+      t.timestamps null: false
+    end
+
+    create_table :groups do |t|
+      t.string :name
+    end
+    add_index :groups, :name, unique: true
+
+    create_table :subgroups do |t|
+      t.references :group
+      t.string :name
+    end
+    add_index :subgroups, :name, unique: true
   end
 end

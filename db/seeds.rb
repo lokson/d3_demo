@@ -1,15 +1,24 @@
 include FactoryGirl::Syntax::Methods
 
-view = create :view
-
-# role with two users
-role = create :role, view: view
-user = create :user, role: role
-create :user, role: role
-
-# new set: user, role and view
 create :user
+a_user = User.last
+a_role = Role.last
+a_view = View.last
+create :subgroup
+a_group = Group.last
+a_subgroup = Subgroup.last
+a_view.groups << a_group
 
-# role with no user
-create :role, view: view
+create :user
+b_user = User.last
+b_role = Role.last
+b_view = View.last
+create :subgroup
+b_group = Group.last
+b_subgroup = Subgroup.last
+b_view.groups << b_group
 
+a_view.groups << b_group
+c_user = create :user, role: a_role
+c_role = create :role, view: a_view
+c_subgroup = create :subgroup, group: a_group

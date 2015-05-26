@@ -5,7 +5,8 @@ class @ElementsController
     @load()
 
   load: ->
-    @model.load (elements) =>
+    @model.load()
+    .then (elements) =>
       @elements = elements
       @element = @model.copy(@state.params) if @state.params.id
 
@@ -18,9 +19,9 @@ class @ElementsController
     .then => @element = @model.copy(element)
 
   save: (element) ->
-    @model.save element, =>
-      @state.go @elements.route
+    @model.save(element)
+    .then => @state.go @elements.route
 
   delete: (element) ->
-    @model.delete element, =>
-      @state.go @elements.route
+    @model.delete(element)
+    .then => @state.go @elements.route

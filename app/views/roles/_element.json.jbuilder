@@ -1,1 +1,1 @@
-json.(element, :id, :name)
+json.(element, :id, :name, :view_id)

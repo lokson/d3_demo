@@ -18,22 +18,29 @@ feature 'roles', js: true do
 
 
 
-  scenario 'crud' do
+  scenario 'happy crud' do
+    view_a = create :view
+    view_b = create :view
+
     visit index_path
     click_css '.glyphicon-plus'
     fill_in_many model, with: data_a
+    select view_a.name
     click_on "Create #{model}"
     wait
 
     expect(model.only).to have_attributes data_a
+    expect(model.only.view.id).to eq view_a.id
     expect(page).to have_content data_a[:name]
 
     click_a data_a[:name]
     fill_many model, with: data_b
+    select view_b.name
     click_on "Update #{model}"
     wait
 
     expect(model.only).to have_attributes data_b
+    expect(model.only.view.id).to eq view_b.id
     expect(page).to have_content data_b[:name]
 
     click_a data_b[:name]
@@ -59,15 +66,26 @@ feature 'roles', js: true do
 
   scenario 'create, duplicate name' do
     element = create model
+    view = create :view
     visit new_path
     data_a[:name] = element.name
     fill_in_many model, with: data_a
+    select view.name
     click_on "Create #{model}"
     wait
 
     expect(model.only).to have_attributes element.attributes
     expect(page).to have_selector('a', text: element.name, count: 1)
   end
+
+  scenario 'create, no view' do
+    create :view
+    visit new_path
+    fill_in_many model, with: data_a
+
+    expect(page).to_not have_button "Create #{model}"
+  end
+
 
   scenario 'delete, with users' do
     user = create :user

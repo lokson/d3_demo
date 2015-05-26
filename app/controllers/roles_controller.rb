@@ -3,6 +3,6 @@ class RolesController < ApplicationController
   include ElementsController
 
   def element_params
-    params.require(param_key).permit :name
+    params.require(param_key).permit :name, :view_id
   end
 end

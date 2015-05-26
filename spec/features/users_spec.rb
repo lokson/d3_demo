@@ -18,7 +18,7 @@ feature 'users', js: true do
 
 
 
-  scenario 'crud' do
+  scenario 'happy crud' do
     role_a = create :role
     role_b = create :role
     visit index_path
@@ -52,17 +52,17 @@ feature 'users', js: true do
   end
 
   scenario 'create, no password' do
-    role_a = create :role
+    role = create :role
     visit new_path
     data_a.delete :password
     fill_in_many model, with: data_a
-    select role_a.name
+    select role.name
 
     expect(page).to_not have_button "Create #{model}"
   end
 
   scenario 'create, no role' do
-    role_a = create :role
+    role = create :role
     visit new_path
     fill_in_many model, with: data_a
 

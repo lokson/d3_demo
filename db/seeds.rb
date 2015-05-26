@@ -1,12 +1,15 @@
 include FactoryGirl::Syntax::Methods
 
-# role with two users
-role = create :role
-create_list :user, 2, role: role
+view = create :view
 
-# role with one user
-create_list :user, 2
+# role with two users
+role = create :role, view: view
+user = create :user, role: role
+create :user, role: role
+
+# new set: user, role and view
+create :user
 
 # role with no user
-create :role
+create :role, view: view
 

@@ -9,9 +9,15 @@ class CreateDatabase < ActiveRecord::Migration
     add_index :users, :name, unique: true
 
     create_table :roles do |t|
+      t.references :view
       t.string :name
       t.timestamps null: false
     end
     add_index :roles, :name, unique: true
+
+    create_table :views do |t|
+      t.string :name
+    end
+    add_index :views, :name, unique: true
   end
 end

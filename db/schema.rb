@@ -17,6 +17,7 @@ ActiveRecord::Schema.define(version: 1) do
   enable_extension "plpgsql"
 
   create_table "roles", force: :cascade do |t|
+    t.integer  "view_id"
     t.string   "name"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
@@ -33,5 +34,11 @@ ActiveRecord::Schema.define(version: 1) do
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
+
+  create_table "views", force: :cascade do |t|
+    t.string "name"
+  end
+
+  add_index "views", ["name"], name: "index_views_on_name", unique: true, using: :btree
 
 end

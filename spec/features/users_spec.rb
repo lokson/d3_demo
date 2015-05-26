@@ -47,7 +47,7 @@ feature 'users', js: true do
     click_on 'Delete'
     wait
 
-    expect(User).to_not exist
+    expect(model).to_not exist
     expect(page).not_to have_content data_b[:name]
   end
 
@@ -87,7 +87,7 @@ feature 'users', js: true do
     visit edit_path element.id
     data_a.delete :password
     fill_many model, with: data_a
-    click_on 'Update User'
+    click_on "Update #{model}"
     wait
 
     expect(model.only).to have_attributes data_a.merge password: element.password

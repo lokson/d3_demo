@@ -69,6 +69,14 @@ feature 'roles', js: true do
     expect(page).to have_selector('a', text: element.name, count: 1)
   end
 
-  xscenario 'delete, with users' do
+  scenario 'delete, with users' do
+    user = create :user
+    element = user.role
+    visit edit_path element.id
+    click_on 'Delete'
+    wait
+
+    expect(model.only).to have_attributes element.attributes
+    expect(User).to exist
   end
 end

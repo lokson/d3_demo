@@ -3,6 +3,7 @@ angular.module('mi').controller 'RolesController',
     @$inject: ['Roles', '$state', 'Views']
 
     constructor: (a,b,@Views) ->
+      window.c = @
       super
 
     load: ->
@@ -14,3 +15,13 @@ angular.module('mi').controller 'RolesController',
 
     set_groups: ->
       @groups = @Views.find(id: @element.view_id).groups
+
+    is_subgroup_selected: (subgroup) ->
+      subgroup.id in @element.subgroup_ids
+
+    toggle_subgroup: (subgroup) ->
+      if @is_subgroup_selected(subgroup)
+        i = @element.subgroup_ids.indexOf subgroup.id
+        @element.subgroup_ids.splice(i,1)
+      else
+        @element.subgroup_ids.push(subgroup.id)

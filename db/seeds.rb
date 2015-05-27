@@ -19,6 +19,8 @@ b_subgroup = Subgroup.last
 b_view.groups << b_group
 
 a_view.groups << b_group
+a_role.subgroups << a_subgroup
+a_role.subgroups << b_subgroup
 c_user = create :user, role: a_role
 c_role = create :role, view: a_view
 c_subgroup = create :subgroup, group: a_group

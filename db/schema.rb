@@ -22,6 +22,13 @@ ActiveRecord::Schema.define(version: 1) do
 
   add_index "groups", ["name"], name: "index_groups_on_name", unique: true, using: :btree
 
+  create_table "role_subgroups", force: :cascade do |t|
+    t.integer  "role_id"
+    t.integer  "subgroup_id"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
   create_table "roles", force: :cascade do |t|
     t.integer  "view_id"
     t.string   "name"
@@ -49,10 +56,8 @@ ActiveRecord::Schema.define(version: 1) do
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
 
   create_table "view_groups", force: :cascade do |t|
-    t.integer  "view_id"
-    t.integer  "group_id"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer "view_id"
+    t.integer "group_id"
   end
 
   create_table "views", force: :cascade do |t|

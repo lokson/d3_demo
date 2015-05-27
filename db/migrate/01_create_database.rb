@@ -23,7 +23,6 @@ class CreateDatabase < ActiveRecord::Migration
     create_table :view_groups do |t|
       t.references :view
       t.references :group
-      t.timestamps null: false
     end
 
     create_table :groups do |t|
@@ -36,5 +35,11 @@ class CreateDatabase < ActiveRecord::Migration
       t.string :name
     end
     add_index :subgroups, :name, unique: true
+
+    create_table :role_subgroups do |t|
+      t.references :role
+      t.references :subgroup
+      t.timestamps null: false
+    end
   end
 end

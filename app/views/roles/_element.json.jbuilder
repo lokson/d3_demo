@@ -1,1 +1,2 @@
-json.(element, :id, :name, :view_id)
+json.(element, :id, :name, :view_id, :subgroup_ids)
+

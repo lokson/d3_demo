@@ -4,4 +4,6 @@ class Role < ActiveRecord::Base
   validates :name, uniqueness: true
 
   has_many :users, dependent: :restrict_with_exception
+  has_many :role_subgroups
+  has_many :subgroups, through: :role_subgroups
 end

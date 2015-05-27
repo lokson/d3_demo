@@ -6,17 +6,12 @@ FactoryGirl.define do
   end
 
   factory :role do
-    sequence :name, ['Torture Chamber Manager', 'Jabba Motivator', 'Deathstar Plumber', 'Chewbacca Food'].cycle
+    sequence :name, ['Deathstar Plumber', 'Torture Chamber Manager', 'Jabba Motivator', 'Chewbacca Food'].cycle
     view
   end
 
   factory :view do
-    sequence :name, ['Dark side', 'Darker side', 'Side with no light', 'Praga Północ side'].cycle
-  end
-
-  factory :view_group do
-    group
-    view
+    sequence :name, ['Darker side', 'Dark side', 'Side with no light', 'Praga Północ side'].cycle
   end
 
   factory :group do

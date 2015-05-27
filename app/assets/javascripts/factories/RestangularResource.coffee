@@ -34,12 +34,15 @@ angular.module("mi").factory 'RestangularResource', ['flash', 'Restangular', (fl
         @create(obj)
 
     create: (obj) ->
-      @extension.post(obj)
+      @extension.customPOST(element: obj)
       .then (res) => @extension.push(res)
       .then null, @on_error
 
     update: (obj) ->
-      obj.put()
+      # todo move from global
+      params = window.reject(obj.plain(), (k,v) -> k == 'id')
+      console.log params
+      obj.customPUT(element: params)
       .then (res) =>
         key = @find_key(res)
         for k of res

@@ -10,4 +10,4 @@
     {{group.name}}
     %ul{'ng-repeat':'subgroup in group.subgroups | orderBy: "name"' }
       %li
-        {{subgroup.name}}
+        %div{'ng-bind':'subgroup.name', 'ng-class':'{selected: c.is_subgroup_selected(subgroup) }', 'ng-click':'c.toggle_subgroup(subgroup)'}

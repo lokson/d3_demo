@@ -1,3 +1,8 @@
+window.reject = (obj, predicate) ->
+  res = {}
+  res[k] = v for k, v of obj when not predicate k, v
+  res
+
 mi = angular.module 'mi', [
   'ngRoute'
   'ngResource'

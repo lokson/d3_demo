@@ -1,6 +1,13 @@
 = simple_form_for element, url: '', html: { name: 'form' } do |f|
   = f.ng_input :name
-  = f.ng_association :view, include_blank: false
+  = f.ng_association :view, input_html: { 'ng-change':'c.update_groups()' }, include_blank: false
   = f.submit class:'btn btn-primary', 'ng-click':'c.save(c.element)', 'ng-disabled':'form.$invalid', onclick:'return false'
   - if element.persisted?
     %button.btn.btn-danger{'ng-click':'c.delete(c.element)', onclick:'return false'} Delete
+
+%ul{'ng-repeat':'group in c.groups | orderBy: "name"' }
+  %li
+    {{group.name}}
+    %ul{'ng-repeat':'subgroup in group.subgroups | orderBy: "name"' }
+      %li
+        {{subgroup.name}}

@@ -6,11 +6,11 @@ angular.module('mi').controller 'RolesController',
       super
 
     load: ->
+      @Views.load().then (elements) => @views = elements
       super
-      @Views.load()
-      .then (elements) =>
-        @views = elements
-        @update_groups()
 
-    update_groups: ->
-      @groups = @Views.find(id: @element.view_id).obj.groups
+    edit: ->
+      super.then => @set_groups()
+
+    set_groups: ->
+      @groups = @Views.find(id: @element.view_id).groups

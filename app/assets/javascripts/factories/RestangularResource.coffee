@@ -14,16 +14,18 @@ angular.module("mi").factory 'RestangularResource', ['flash', 'Restangular', (fl
       .then (res) => @extension = res
       .then null, @on_error
 
-    # find(id: 1)
-    find: (obj) ->
+    find_val_and_key: (obj) ->
       for key, val of @all()
         if val.id == parseInt(obj.id)
-          return { key: key, obj: val }
-      { key: null, obj: null }
+          return { key: key, val: val }
+      { key: null, val: null }
+    find_key: (obj) -> @find_val_and_key(obj).key
+    # find(id: 1)
+    find: (obj) -> @find_val_and_key(obj).val
 
     # copy(id: 1)
     copy: (obj) ->
-      Restangular.copy(@find(obj).obj)
+      Restangular.copy(@find obj)
 
     save: (obj) ->
       if obj.id
@@ -39,7 +41,7 @@ angular.module("mi").factory 'RestangularResource', ['flash', 'Restangular', (fl
     update: (obj) ->
       obj.put()
       .then (res) =>
-        key = @find(res).key
+        key = @find_key(res)
         for k of res
           @extension[key][k] = res[k]
       .then null, @on_error
@@ -47,7 +49,7 @@ angular.module("mi").factory 'RestangularResource', ['flash', 'Restangular', (fl
     delete: (obj) ->
       obj.remove()
       .then (res) =>
-        key = @find(obj).key
+        key = @find_key(obj)
         @extension.splice(key, 1)
       .then null, @on_error
 

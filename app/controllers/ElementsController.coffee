@@ -8,7 +8,7 @@ class @ElementsController
     @model.load()
     .then (elements) =>
       @elements = elements
-      @element = @model.copy(@state.params) if @state.params.id
+      @edit(id: @state.params.id) if @state.params.id
 
   new: ->
     @state.go("#{@elements.route}.new")

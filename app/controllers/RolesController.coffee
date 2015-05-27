@@ -13,6 +13,10 @@ angular.module('mi').controller 'RolesController',
     edit: ->
       super.then => @set_groups()
 
+    view_changed: ->
+      @element.subgroup_ids = []
+      @set_groups()
+
     set_groups: ->
       @groups = @Views.find(id: @element.view_id).groups
 

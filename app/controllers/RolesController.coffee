@@ -3,15 +3,21 @@ angular.module('mi').controller 'RolesController',
     @$inject: ['Roles', '$state', 'Views']
 
     constructor: (a,b,@Views) ->
-      window.c = @
-      super
-
-    load: ->
-      @Views.load().then (elements) => @views = elements
+      window.roles_controller = @
       super
 
     edit: ->
-      super.then => @set_groups()
+      super
+      .then => @load_views()
+      .then => @set_groups()
+
+    new: ->
+      super
+      .then => @load_views()
+
+    load_views: ->
+      @Views.load()
+      .then (elements) => @views = elements
 
     view_changed: ->
       @element.subgroup_ids = []

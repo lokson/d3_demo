@@ -97,4 +97,43 @@ feature 'roles', js: true do
     expect(model.only).to have_attributes element.attributes
     expect(User).to exist
   end
+
+  scenario 'update, subgroup happy crud' do
+    element = create model
+    view_a = View.last
+    view_b = create :view
+    subgroup_a = create :subgroup
+    subgroup_b = create :subgroup
+    view_a.groups << subgroup_a.group
+    view_a.groups << subgroup_b.group
+    view_b.groups << subgroup_a.group
+    view_b.groups << subgroup_b.group
+    element.subgroups << subgroup_a
+
+    visit edit_path element.id
+    fill_many model, with: data_a
+    select view_a.name
+    find('.subgroup', text: subgroup_b.name).click
+    click_on "Update #{model}"
+    wait
+
+    expect(model.only).to have_attributes data_a
+    expect(model.only.subgroup_ids).to match [subgroup_a.id, subgroup_b.id]
+
+    visit edit_path element.id
+    find('.subgroup', text: subgroup_b.name).click
+    click_on "Update #{model}"
+    wait
+
+    expect(model.only).to have_attributes data_a
+    expect(model.only.subgroup_ids).to match [subgroup_a.id]
+
+    visit edit_path element.id
+    select view_b.name
+    click_on "Update #{model}"
+    wait
+
+    expect(model.only).to have_attributes data_a
+    expect(model.only.subgroup_ids).to match []
+  end
 end

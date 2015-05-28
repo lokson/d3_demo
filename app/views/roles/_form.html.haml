@@ -4,10 +4,9 @@
   = f.submit class:'btn btn-primary', 'ng-click':'c.save(c.element)', 'ng-disabled':'form.$invalid', onclick:'return false'
   - if element.persisted?
     %button.btn.btn-danger{'ng-click':'c.delete(c.element)', onclick:'return false'} Delete
-
-%ul{'ng-repeat':'group in c.groups | orderBy: "name"' }
-  %li
-    {{group.name}}
-    %ul{'ng-repeat':'subgroup in group.subgroups | orderBy: "name"' }
+  #groups
+    %ul{'ng-repeat':'group in c.groups | orderBy: "name"' }
       %li
-        %div{'ng-bind':'subgroup.name', 'ng-class':'{selected: c.is_subgroup_selected(subgroup) }', 'ng-click':'c.toggle_subgroup(subgroup)'}
+        {{group.name}}
+        %ul{'ng-repeat':'subgroup in group.subgroups | orderBy: "name"' }
+          %li.subgroup{'ng-bind':'subgroup.name', 'ng-class':'{selected: c.is_subgroup_selected(subgroup) }', 'ng-click':'c.toggle_subgroup(subgroup)'}

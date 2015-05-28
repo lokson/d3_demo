@@ -1,4 +1,4 @@
 [days]
 0.5 bootstrap
 1.5 users crud
-2.0 roles (+ views, groups, subgroups) crud
+2.5 roles (+ views, groups, subgroups) crud

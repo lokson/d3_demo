@@ -29,7 +29,11 @@ body
   background: #212224
 
 .selected
+  +transition(all, ease-in-out, 0.3s)
   background: #FD6D21
+.selected-remove
+  +transition(all, ease-in-out, 0.3s)
+  background: transparent
 
 .ng-enter
   +transition(opacity, ease-in-out, 0.3s)

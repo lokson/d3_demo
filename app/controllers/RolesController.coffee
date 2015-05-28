@@ -17,7 +17,10 @@ angular.module('mi').controller 'RolesController',
       @populate_groups()
 
     populate_groups: ->
-      @groups = @Views.find(id: @element.view_id).groups
+      if @element?.view_id?
+        @groups = @Views.find(id: @element.view_id).groups
+      else
+        @groups = []
 
     is_subgroup_selected: (subgroup) ->
       subgroup.id in @element.subgroup_ids

@@ -1,7 +1,6 @@
 angular.module('mi').controller 'UsersController',
   class UsersController extends ElementsController
     @$inject: ['Users', '$state']
-
     # debug demo
     constructor: ->
       # 3 ways to debug:

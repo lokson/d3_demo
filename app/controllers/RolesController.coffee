@@ -1,29 +1,22 @@
 angular.module('mi').controller 'RolesController',
   class RolesController extends ElementsController
     @$inject: ['Roles', '$state', 'Views']
-
     constructor: (a,b,@Views) ->
-      window.roles_controller = @
       super
 
-    edit: ->
-      super
-      .then => @load_views()
-      .then => @set_groups()
-
-    new: ->
-      super
-      .then => @load_views()
-
-    load_views: ->
+    load: ->
       @Views.load()
       .then (elements) => @views = elements
+      .then => super
+
+    edit_or_new: ->
+      @populate_groups()
 
     view_changed: ->
       @element.subgroup_ids = []
-      @set_groups()
+      @populate_groups()
 
-    set_groups: ->
+    populate_groups: ->
       @groups = @Views.find(id: @element.view_id).groups
 
     is_subgroup_selected: (subgroup) ->

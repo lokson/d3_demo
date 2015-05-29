@@ -1,6 +1,6 @@
 Rails.application.routes.draw do
   resources :users
   resources :roles
-  resources :views, only: [:index]
+  resources :views
   root 'home#index'
 end

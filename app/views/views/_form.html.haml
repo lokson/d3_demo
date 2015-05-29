@@ -1,0 +1,11 @@
+= simple_form_for element , url: '', html: { name: 'form' } do |f|
+  = f.ng_input :name
+  - if action_name == 'edit'
+    = f.input :password, input_html: { 'ng-model':'c.element.password', value:'' }, required: false
+  - if action_name == 'new'
+    = f.ng_input :password
+  = f.ng_association :role, include_blank: false
+
+  = f.submit class:'btn btn-primary', 'ng-click':'c.save(c.element)', 'ng-disabled':'form.$invalid', onclick:'return false'
+  - if action_name == 'edit'
+    %button.btn.btn-danger{'ng-click':'c.delete(c.element)', onclick:'return false'} Delete

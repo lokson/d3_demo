@@ -31,6 +31,8 @@ mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider', 'Restangular
       .state('users',
         url: '/users'
         templateUrl: "#{root_path}users"
+        controller: 'UsersController'
+        controllerAs: 'c'
 
       ).state('users.new',
         url: '/new'
@@ -43,6 +45,8 @@ mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider', 'Restangular
       ).state('roles',
         url: '/roles'
         templateUrl: "#{root_path}roles"
+        controller: 'RolesController'
+        controllerAs: 'c'
 
       ).state('roles.new',
         url: '/new'
@@ -51,6 +55,20 @@ mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider', 'Restangular
       ).state('roles.edit',
         url: '/:id/edit'
         templateUrl: (params) -> "#{root_path}roles/#{params.id}/edit"
+
+      ).state('views',
+        url: '/views'
+        templateUrl: "#{root_path}views"
+        controller: 'ViewsController'
+        controllerAs: 'c'
+
+      ).state('views.new',
+        url: '/new'
+        templateUrl: "#{root_path}views/new"
+
+      ).state('views.edit',
+        url: '/:id/edit'
+        templateUrl: (params) -> "#{root_path}views/#{params.id}/edit"
 
       )
 ]

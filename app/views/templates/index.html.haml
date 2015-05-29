@@ -1,0 +1,9 @@
+.col-sm-2
+  %input{name:'keywords', 'ng-model':'keywords'}
+  %ul.list-unstyled.animate-leave{'ng-repeat':'element in c.elements | filter: keywords | orderBy: "name"' }
+    %li
+      %a{'ng-click':'c.edit(element)'}
+        {{element.name}}
+  %a.glyphicon.glyphicon-plus{'ng-click':'c.new()'}
+.col-sm-10
+  %div{'ui-view':''}

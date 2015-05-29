@@ -3,6 +3,6 @@ class ViewsController < ApplicationController
   include ElementsController
 
   def element_params
-    # params.require(param_key).permit :name
+    params.require(:element).permit :name
   end
 end

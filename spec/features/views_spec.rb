@@ -43,4 +43,16 @@ feature 'views', js: true do
     expect(model).to_not exist
     expect(page).not_to have_content data_b[:name]
   end
+
+  scenario 'create, duplicate name' do
+    element = create model
+    visit new_path
+    data_a[:name] = element.name
+    fill_in_many model, with: data_a
+    click_on "Create #{model}"
+    wait
+
+    expect(model.only).to have_attributes element.attributes
+    expect(page).to have_selector('a', text: element.name, count: 1)
+  end
 end

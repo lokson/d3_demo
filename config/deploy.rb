@@ -57,7 +57,6 @@ namespace :deploy do
     return if !fetch :rails_env
     execute_in_current :bundle, "exec rake websocket_rails:stop_server RAILS_ENV=#{fetch :rails_env}"
   end
-
   task :redis_start do
     execute_in_current :service, 'redis-server start'
   end
@@ -97,9 +96,9 @@ namespace :deploy do
   after :publishing, :assets_clean
   after :publishing, :assets_precompile
 
-  after :publishing, :nginx_stop
-  after :publishing, :db_reset
-  after :publishing, :nginx_start
+  # after :publishing, :nginx_stop
+  # after :publishing, :db_reset
+  # after :publishing, :nginx_start
 
   after :publishing, :restart
 end

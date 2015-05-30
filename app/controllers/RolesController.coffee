@@ -1,4 +1,4 @@
-angular.module('d3demo').controller 'RolesController',
+angular.module('app').controller 'RolesController',
   class RolesController extends ElementsController
     @$inject: ['Roles', '$state', 'Views']
     constructor: (a,b,@Views) ->

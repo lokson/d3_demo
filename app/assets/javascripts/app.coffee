@@ -3,7 +3,7 @@ window.reject = (obj, predicate) ->
   res[k] = v for k, v of obj when not predicate k, v
   res
 
-app = angular.module 'd3demo', [
+app = angular.module 'app', [
   'ngRoute'
   'ngResource'
   'ngAnimate'

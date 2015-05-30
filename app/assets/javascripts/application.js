@@ -24,4 +24,4 @@
 //= require_tree ../../controllers
 //= require_tree ../../models
 //= require websocket_rails/main
-
+//= require d3/d3

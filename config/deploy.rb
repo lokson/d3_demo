@@ -96,9 +96,9 @@ namespace :deploy do
   after :publishing, :assets_clean
   after :publishing, :assets_precompile
 
-  after :publishing, :nginx_stop
-  after :publishing, :db_reset
-  after :publishing, :nginx_start
+  # after :publishing, :nginx_stop
+  # after :publishing, :db_reset
+  # after :publishing, :nginx_start
 
   after :publishing, :restart
 end

@@ -10,6 +10,7 @@
     "angular-animate": "latest",
     "angular-ui-router": "latest",
     "restangular": "latest",
-    "underscore": "latest"
+    "underscore": "latest",
+    "d3": "latest"
   }
 }

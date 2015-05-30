@@ -1,8 +1,8 @@
 # config valid only for Capistrano 3.1
 lock '3.4.0'
 
-set :application, 'mi'
-set :repo_url, 'git@internal.motabi.pl:mi-backend'
+set :application, 'd3_demo'
+set :repo_url, 'git@github.com:lokson/d3_demo.git'
 set :linked_files, %w{config/database.yml}
 set :linked_dirs, %w{log tmp/pids tmp/cache tmp/sockets vendor/bundle public/system}
 
@@ -30,10 +30,12 @@ namespace :deploy do
 
   task :assets_precompile do
     return if !fetch :rails_env
+    execute_in_current :bundle, "exec rake assets:clean RAILS_ENV=#{fetch :rails_env}"
     execute_in_current :bundle, "exec rake assets:precompile RAILS_ENV=#{fetch :rails_env}"
   end
 
   task :update_bins do
+    execute_in_current :rm, "-rf #{release_path}/bin"
     execute_in_current :bundle, "exec rake rails:update:bin"
   end
 
@@ -92,11 +94,12 @@ namespace :deploy do
 
   after :publishing, :permit_temp
   after :publishing, :update_bins
+  after :publishing, :assets_clean
   after :publishing, :assets_precompile
 
-  # after :publishing, :nginx_stop
-  # after :publishing, :db_reset
-  # after :publishing, :nginx_start
+  after :publishing, :nginx_stop
+  after :publishing, :db_reset
+  after :publishing, :nginx_start
 
   after :publishing, :restart
 end

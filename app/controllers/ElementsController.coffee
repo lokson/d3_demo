@@ -1,4 +1,4 @@
-angular.module('mi')
+angular.module('d3demo')
 
 class @ElementsController
   constructor: (@model, @state) ->

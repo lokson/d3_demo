@@ -1,4 +1,4 @@
-angular.module('mi').controller 'UsersController',
+angular.module('d3demo').controller 'UsersController',
   class UsersController extends ElementsController
     @$inject: ['Users', '$state']
     # debug demo

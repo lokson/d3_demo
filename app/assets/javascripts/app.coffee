@@ -3,7 +3,7 @@ window.reject = (obj, predicate) ->
   res[k] = v for k, v of obj when not predicate k, v
   res
 
-mi = angular.module 'mi', [
+app = angular.module 'd3demo', [
   'ngRoute'
   'ngResource'
   'ngAnimate'
@@ -14,7 +14,7 @@ mi = angular.module 'mi', [
   'restangular'
 ]
 
-mi.config ['flashProvider', '$stateProvider', '$urlRouterProvider', 'RestangularProvider'
+app.config ['flashProvider', '$stateProvider', '$urlRouterProvider', 'RestangularProvider'
   (flashProvider, $stateProvider, $urlRouterProvider, RestangularProvider) ->
     flashProvider.errorClassnames.push 'alert-danger'
     flashProvider.warnClassnames.push 'alert-warning'

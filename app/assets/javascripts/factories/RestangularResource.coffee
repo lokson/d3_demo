@@ -1,6 +1,6 @@
 # todo: extract extension as decorator
 # todo: extract flash as decorator
-angular.module("mi").factory 'RestangularResource', ['flash', 'Restangular', (flash, Restangular) ->
+angular.module("d3demo").factory 'RestangularResource', ['flash', 'Restangular', (flash, Restangular) ->
   class RestangularResource
     constructor: (resource) ->
       @resource = resource

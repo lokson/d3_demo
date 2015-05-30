@@ -1,3 +1,3 @@
-angular.module("mi").factory "Users", ['Restangular', 'RestangularResource', (Restangular, RestangularResource) ->
+angular.module("d3demo").factory "Users", ['Restangular', 'RestangularResource', (Restangular, RestangularResource) ->
   new RestangularResource(new Restangular.all 'users')
 ]

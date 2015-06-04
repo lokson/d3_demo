@@ -61,6 +61,7 @@ angular.module('app').controller 'UsersController',
 
         circles.enter()
         .append('circle')
+        .transition()
         .attr('cx', (d) -> d.logins_count * 3 )
         .attr('cy', 40)
         .attr('r', (d) -> d.logins_count * 0.5 )
@@ -68,6 +69,7 @@ angular.module('app').controller 'UsersController',
 
         circles.exit()
         .transition()
+        .style('opacity', 0)
         .remove()
 
 #      vis.selectAll('circle').data(@filtered_elements())

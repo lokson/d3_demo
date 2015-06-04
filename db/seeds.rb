@@ -24,3 +24,5 @@ a_role.subgroups << b_subgroup
 c_user = create :user, role: a_role
 c_role = create :role, view: a_view
 c_subgroup = create :subgroup, group: a_group
+
+d_user = create :user, role: a_role

@@ -49,8 +49,10 @@ ActiveRecord::Schema.define(version: 1) do
     t.integer  "role_id"
     t.string   "name"
     t.string   "password"
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
+    t.integer  "logins_count",  default: 0
+    t.datetime "last_login_at"
+    t.datetime "created_at",                null: false
+    t.datetime "updated_at",                null: false
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree

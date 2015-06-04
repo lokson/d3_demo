@@ -4,6 +4,8 @@ class CreateDatabase < ActiveRecord::Migration
       t.references :role
       t.string :name
       t.string :password
+      t.integer :logins_count, default: 0
+      t.datetime :last_login_at
       t.timestamps null: false
     end
     add_index :users, :name, unique: true

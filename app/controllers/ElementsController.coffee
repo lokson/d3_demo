@@ -3,6 +3,9 @@ angular.module('app')
 class @ElementsController
   constructor: (@model, @state) ->
     @load()
+    .then => @init()
+
+  init: ->
 
   load: ->
     @model.load()

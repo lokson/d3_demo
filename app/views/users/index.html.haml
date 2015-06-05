@@ -1,10 +1,10 @@
 .col-sm-2
   %input{name:'keywords', 'ng-model':'c.keywords'}
-  %ul.list-unstyled.animate-leave{'ng-repeat':'element in c.elements | filter: c.keywords | orderBy: "name"' }
+  %ul.list-unstyled.animate-leave{'ng-repeat':'element in c.elements | filter: {name: c.keywords} | orderBy: "name"' }
     %li
       %a{'ng-click':'c.edit(element)'}
         {{element.name}}
   %a.glyphicon.glyphicon-plus{'ng-click':'c.new()'}
 .col-sm-10
-  %svg{width:500, height:80}
+  %svg{width:500, height:240}
   %div{'ui-view':''}

@@ -14,12 +14,28 @@ angular.module('app').controller 'UsersController',
     init: =>
       @scope.$watch @filtered_elements, @draw_graph, true
 
+    days_ago: (date) =>
+      now = new Date()
+      (now - date) / (1000*60*60*24)
+
     draw_graph: (data) =>
+      min_date = new Date(2015, 4, 10)
+
+      # scale
+      x = d3.scale.log()
+      .domain [@days_ago(min_date), 0.001]
+      .rangeRound [0, 500]
+
+      x_axis = d3.svg.axis().scale(x).orient('bottom')
+      d3.select('svg').call(x_axis)
+
       # bind data
       groups = d3.select('svg').selectAll('g').data(data, (d) -> d.id)
 
       # add
-      group = groups.enter().append('g').attr('transform', (d) -> "translate(#{d.logins_count * 3}, 40)")
+      group = groups.enter()
+      .append('g')
+      .attr('transform', (d) => "translate(#{x(@days_ago(new Date(d.last_login_at)))}, 40)")
       group.append('circle')
       group.append('text')
 
@@ -36,7 +52,7 @@ angular.module('app').controller 'UsersController',
       .style('opacity', 0.8)
       .transition()
       .duration(300)
-      .attr('transform', (d) -> "translate(#{d.logins_count * 3}, 40)")
+      .attr('transform', (d) => "translate(#{x(@days_ago(new Date(d.last_login_at)))}, 40)")
       .style('fill', 'red')
 
       groups.select('circle')

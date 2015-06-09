@@ -11,6 +11,7 @@
     "angular-ui-router": "latest",
     "restangular": "latest",
     "underscore": "latest",
-    "d3": "latest"
+    "d3": "latest",
+    "eonasdan-bootstrap-datetimepicker": "latest"
   }
 }

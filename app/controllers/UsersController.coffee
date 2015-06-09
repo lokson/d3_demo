@@ -1,12 +1,19 @@
 angular.module('app').controller 'UsersController',
   class UsersController extends ElementsController
     @$inject: ['Users', '$state', '$filter', '$scope']
-    constructor: (a,b,@filter,@scope) -> super
+    constructor: (a, b, @filter, @scope) ->
+      super
 
     edit: (element) ->
       @state.go("#{@elements.route}.edit", id: element.id)
       .then => @element = element
       .then => @edit_or_new()
+
+    edit_or_new: =>
+      $('.datetimepicker')
+      .datetimepicker()
+      .on 'dp.change', (event) =>
+        @element.last_login_at =  moment(event.date).format()
 
     filtered_elements: =>
       @filter('filter')(@elements, name: @keywords)

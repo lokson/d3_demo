@@ -12,6 +12,8 @@
     "restangular": "latest",
     "underscore": "latest",
     "d3": "latest",
-    "eonasdan-bootstrap-datetimepicker": "latest"
+    "angular-datetime": "latest"
+  },
+  "resolutions": {
   }
 }

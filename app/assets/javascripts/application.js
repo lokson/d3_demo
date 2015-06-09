@@ -26,5 +26,3 @@
 //= require websocket_rails/main
 //= require d3/d3
 //= require moment/moment
-//= require bootstrap-sass-official/assets/javascripts/bootstrap
-//= require eonasdan-bootstrap-datetimepicker/src/js/bootstrap-datetimepicker

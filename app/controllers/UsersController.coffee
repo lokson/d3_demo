@@ -9,12 +9,6 @@ angular.module('app').controller 'UsersController',
       .then => @element = element
       .then => @edit_or_new()
 
-    edit_or_new: =>
-      $('.datetimepicker')
-      .datetimepicker()
-      .on 'dp.change', (event) =>
-        @element.last_login_at =  moment(event.date).format()
-
     filtered_elements: =>
       @filter('filter')(@elements, name: @keywords)
 

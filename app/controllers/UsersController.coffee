@@ -1,13 +1,19 @@
 angular.module('app').controller 'UsersController',
   class UsersController extends ElementsController
-    @$inject: ['Users', '$state', '$filter', '$scope']
-    constructor: (a, b, @filter, @scope) ->
+    @$inject: ['Users', '$state', '$filter', '$scope', '$timeout']
+    constructor: (a, b, @filter, @scope, @timeout) ->
       super
 
     edit: (element) ->
       @state.go("#{@elements.route}.edit", id: element.id)
-      .then => @element = element
+      .then =>
+        @element = element
+        @element.last_login_at = new Date(@element.last_login_at)
       .then => @edit_or_new()
+#      .then =>
+#        f = =>
+#          @draw_graph(@filtered_elements())
+#        @timeout(f , 1000)
 
     filtered_elements: =>
       @filter('filter')(@elements, name: @keywords)
@@ -20,15 +26,17 @@ angular.module('app').controller 'UsersController',
       (now - date) / (1000*60*60*24)
 
     draw_graph: (data) =>
-      min_date = new Date(2015, 4, 10)
+      min_date = new Date(2014, 4, 10)
 
       # scale
       x = d3.scale.log()
       .domain [@days_ago(min_date), 0.001]
       .rangeRound [0, 500]
 
+      d3.select('svg').style('fill', 'red')
+
       x_axis = d3.svg.axis().scale(x).orient('bottom')
-      d3.select('svg').call(x_axis)
+#      d3.select('svg').call(x_axis)
 
       # bind data
       groups = d3.select('svg').selectAll('g').data(data, (d) -> d.id)
@@ -54,7 +62,6 @@ angular.module('app').controller 'UsersController',
       .transition()
       .duration(300)
       .attr('transform', (d) => "translate(#{x(@days_ago(new Date(d.last_login_at)))}, 40)")
-      .style('fill', 'red')
 
       groups.select('circle')
       .transition()

@@ -1,6 +1,6 @@
 = simple_form_for element , url: '', html: { name: 'form' } do |f|
   = f.ng_input :name
-  = f.ng_input :last_login_at, as: :string, input_html: { }
+  = f.ng_input :last_login_at, as: :string, input_html: { datetime:'yyyy-MM-dd HH:mm:ss' }
   = f.ng_input :logins_count
   - if action_name == 'edit'
     = f.input :password, input_html: { 'ng-model':'c.element.password', value:'' }, required: false

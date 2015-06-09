@@ -12,6 +12,7 @@ app = angular.module 'app', [
   'angular-flash.service'
   'angular-flash.flash-alert-directive'
   'restangular'
+  'datetime'
 ]
 
 app.config ['flashProvider', '$stateProvider', '$urlRouterProvider', 'RestangularProvider'

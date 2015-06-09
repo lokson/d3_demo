@@ -1,9 +1,9 @@
 FactoryGirl.define do
   factory :user do
     role
-    sequence :name, ['Lord Vader', 'Master Joda', 'Princess Leya', 'Luke Skywalker'].cycle
-    sequence :logins_count, [66, 17, 28, 44].cycle
-    sequence :last_login_at, [1.minute.ago, 17.days.ago, 3.days.ago, 2.days.ago].cycle
+    sequence :name, ['Lord Vader', 'Master Joda', 'Princess Leya', 'Luke Skywalker', 'Jabba the Hut'].cycle
+    sequence :logins_count, [15, 10, 20, 18, 18].cycle
+    sequence :last_login_at, [1.year.ago, 1.month.ago, 1.day.ago, 1.hour.ago, 1.minute.ago].cycle
     sequence :created_at, [20.days.ago, 30.days.ago, 10.days.ago, 10.days.ago].cycle
     password '123123123'
   end
